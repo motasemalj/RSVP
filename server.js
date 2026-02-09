@@ -156,18 +156,22 @@ app.post('/api/rsvp', async (req, res) => {
 
     console.log('RSVP saved:', { name, phone, attending });
 
-    // Respond to guest immediately
+    // Send email before responding
+    let emailSent = false;
+    try {
+      emailSent = await sendNotification({ name, phone, attending });
+      console.log('Email result:', emailSent ? 'SENT' : 'FAILED');
+    } catch (emailErr) {
+      console.error('Email error:', emailErr);
+    }
+
     res.json({
       success: true,
+      emailSent,
       message: attending === 'yes'
         ? 'Thank you! We look forward to celebrating with you! / شكراً لك! نتطلع للاحتفال معك!'
         : 'Thank you for letting us know. We will miss you! / شكراً لإعلامنا. سنفتقدك!'
     });
-
-    // Send email in background
-    sendNotification({ name, phone, attending })
-      .then(sent => console.log('Email result:', sent ? 'SENT' : 'FAILED'))
-      .catch(err => console.error('Email notification failed:', err.message));
 
   } catch (err) {
     console.error('Server error:', err);
