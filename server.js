@@ -39,7 +39,7 @@ const sendNotification = async ({ name, phone, attending }) => {
   try {
     const { data, error } = await resend.emails.send({
       from: 'Wedding RSVP <onboarding@resend.dev>',
-      to: ['motasem.aljayyousi@gmail.com', 'daniaatatreh1@gmail.com'],
+      to: ['motasem.aljayyousi@gmail.com'],
       subject: `💍 RSVP: ${name} - ${attending === 'yes' ? 'Attending' : 'Not Attending'} (${counts.attending} attending so far)`,
       html: `
         <div style="font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -105,14 +105,17 @@ const sendNotification = async ({ name, phone, attending }) => {
     });
 
     if (error) {
-      console.error('Resend error:', error);
+      console.error('Resend error:', JSON.stringify(error));
+      // Store last error for debugging
+      sendNotification.lastError = error;
       return false;
     }
 
     console.log('Email sent successfully, id:', data?.id);
     return true;
   } catch (error) {
-    console.error('Email error:', error);
+    console.error('Email error:', error.message || error);
+    sendNotification.lastError = error.message || error;
     return false;
   }
 };
@@ -168,6 +171,7 @@ app.post('/api/rsvp', async (req, res) => {
     res.json({
       success: true,
       emailSent,
+      emailError: emailSent ? null : (sendNotification.lastError || 'unknown'),
       message: attending === 'yes'
         ? 'Thank you! We look forward to celebrating with you! / شكراً لك! نتطلع للاحتفال معك!'
         : 'Thank you for letting us know. We will miss you! / شكراً لإعلامنا. سنفتقدك!'
