@@ -39,7 +39,7 @@ const sendNotification = async ({ name, phone, attending }) => {
   try {
     const { data, error } = await resend.emails.send({
       from: 'Wedding RSVP <onboarding@resend.dev>',
-      to: ['motasem.aljayyousi@gmail.com'],
+      to: ['daniaatatreh1@gmail.com'],
       subject: `💍 RSVP: ${name} - ${attending === 'yes' ? 'Attending' : 'Not Attending'} (${counts.attending} attending so far)`,
       html: `
         <div style="font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -337,7 +337,7 @@ app.get('/api/test-email', async (req, res) => {
   try {
     const { data, error } = await resend.emails.send({
       from: 'Wedding RSVP <onboarding@resend.dev>',
-      to: ['motasem.aljayyousi@gmail.com'],
+      to: ['daniaatatreh1@gmail.com'],
       subject: 'RSVP Email Test - It Works!',
       html: '<h2>Email notifications are working! / الإشعارات تعمل</h2><p>This is a test from your Wedding RSVP app on Railway.</p>'
     });
