@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motasem & Dania - Wedding RSVP | دعوة زفاف معتصم و دانية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #d4af37;
+      --gold-light: #f4e4bc;
+      --gold-dark: #b8960c;
+      --green-dark: #1a3d1f;
+      --green-medium: #2c5530;
+      --green-light: #3d7344;
+      --cream: #faf8f5;
+      --white: #ffffff;
+      --text-dark: #2d2d2d;
+      --text-light: #666666;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', 'Amiri', serif;
+      background: var(--cream);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Islamic geometric pattern background */
+    .pattern-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231a3d1f' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .container {
+      max-width: 650px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header section */
+    .header {
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+    .bismillah {
+      font-family: 'Amiri', serif;
+      font-size: 1.8rem;
+      color: var(--green-dark);
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+
+    .ornament {
+      width: 200px;
+      height: 40px;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    .ornament::before,
+    .ornament::after {
+      content: '✦';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold);
+      font-size: 1.2rem;
+    }
+
+    .ornament::before {
+      left: 0;
+    }
+
+    .ornament::after {
+      right: 0;
+    }
+
+    .ornament-line {
+      position: absolute;
+      top: 50%;
+      left: 30px;
+      right: 30px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .ornament-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5rem;
+      color: var(--gold);
+    }
+
+    .couple-names {
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: var(--green-dark);
+      margin: 20px 0;
+      letter-spacing: 3px;
+      line-height: 1.3;
+    }
+
+    .couple-names-arabic {
+      font-family: 'Amiri', serif;
+      font-size: 2.8rem;
+      color: var(--green-medium);
+      margin-bottom: 20px;
+    }
+
+    .ampersand {
+      font-style: italic;
+      color: var(--gold);
+      font-size: 2.5rem;
+      display: block;
+      margin: 5px 0;
+    }
+
+    .wedding-label {
+      font-size: 1rem;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 30px;
+    }
+
+    /* Main card */
+    .rsvp-card {
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+      padding: 50px 40px;
+      margin: 20px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rsvp-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--green-dark), var(--gold), var(--green-dark));
+    }
+
+    /* Corner decorations */
+    .corner-decor {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      opacity: 0.15;
+    }
+
+    .corner-decor.top-left {
+      top: 10px;
+      left: 10px;
+      border-top: 3px solid var(--gold);
+      border-left: 3px solid var(--gold);
+    }
+
+    .corner-decor.top-right {
+      top: 10px;
+      right: 10px;
+      border-top: 3px solid var(--gold);
+      border-right: 3px solid var(--gold);
+    }
+
+    .corner-decor.bottom-left {
+      bottom: 10px;
+      left: 10px;
+      border-bottom: 3px solid var(--gold);
+      border-left: 3px solid var(--gold);
+    }
+
+    .corner-decor.bottom-right {
+      bottom: 10px;
+      right: 10px;
+      border-bottom: 3px solid var(--gold);
+      border-right: 3px solid var(--gold);
+    }
+
+    .event-details {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .date {
+      font-size: 2rem;
+      color: var(--green-dark);
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    .date-arabic {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.3rem;
+      color: var(--text-light);
+      margin-bottom: 15px;
+    }
+
+    .location {
+      font-size: 1.3rem;
+      color: var(--gold-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .location-icon {
+      font-size: 1.2rem;
+    }
+
+    /* Question section */
+    .question-section {
+      text-align: center;
+      padding: 30px 0;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      margin-bottom: 30px;
+    }
+
+    .question {
+      font-size: 1.25rem;
+      color: var(--text-dark);
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    .question-arabic {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.15rem;
+      color: var(--text-light);
+      direction: rtl;
+    }
+
+    .deadline {
+      margin-top: 25px;
+      padding: 15px 25px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(44, 85, 48, 0.05));
+      border-radius: 10px;
+      display: inline-block;
+    }
+
+    .deadline p {
+      font-size: 1rem;
+      color: var(--green-dark);
+      margin-bottom: 5px;
+    }
+
+    .deadline p:last-child {
+      font-family: 'Tajawal', sans-serif;
+      color: var(--text-light);
+      margin-bottom: 0;
+      direction: rtl;
+    }
+
+    /* Form styles */
+    .rsvp-form {
+      padding: 0 10px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 1rem;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .form-label-arabic {
+      font-family: 'Tajawal', sans-serif;
+      color: var(--text-light);
+      font-weight: 400;
+      margin-left: 10px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 15px 20px;
+      font-size: 1.1rem;
+      font-family: 'Cormorant Garamond', serif;
+      border: 2px solid #e8e8e8;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      background: var(--cream);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: var(--white);
+      box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+    }
+
+    .form-input::placeholder {
+      color: #aaa;
+    }
+
+    /* Response buttons */
+    .response-options {
+      display: flex;
+      gap: 15px;
+      margin: 30px 0;
+    }
+
+    .response-btn {
+      flex: 1;
+      padding: 20px 15px;
+      border: 2px solid #e8e8e8;
+      border-radius: 12px;
+      background: var(--white);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .response-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .response-btn.selected.accept {
+      border-color: var(--green-medium);
+      background: linear-gradient(135deg, rgba(44, 85, 48, 0.05), rgba(44, 85, 48, 0.1));
+    }
+
+    .response-btn.selected.decline {
+      border-color: #c0a080;
+      background: linear-gradient(135deg, rgba(192, 160, 128, 0.05), rgba(192, 160, 128, 0.1));
+    }
+
+    .response-btn .emoji {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .response-btn .text-en {
+      font-size: 1rem;
+      color: var(--text-dark);
+      font-weight: 500;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .response-btn .text-ar {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text-light);
+      display: block;
+    }
+
+    /* Submit button */
+    .submit-btn {
+      width: 100%;
+      padding: 18px 30px;
+      font-size: 1.2rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--green-dark), var(--green-medium));
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      letter-spacing: 1px;
+      margin-top: 10px;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(26, 61, 31, 0.3);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .submit-btn-text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .submit-btn-text .arabic {
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    /* Success/Error messages */
+    .message {
+      text-align: center;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 20px;
+      display: none;
+    }
+
+    .message.success {
+      background: linear-gradient(135deg, rgba(44, 85, 48, 0.1), rgba(44, 85, 48, 0.05));
+      border: 1px solid var(--green-medium);
+      color: var(--green-dark);
+    }
+
+    .message.error {
+      background: linear-gradient(135deg, rgba(180, 80, 80, 0.1), rgba(180, 80, 80, 0.05));
+      border: 1px solid #b45050;
+      color: #8b3030;
+    }
+
+    .message.show {
+      display: block;
+      animation: slideIn 0.5s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Thank you screen */
+    .thank-you {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .thank-you.show {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .thank-you-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+
+    .thank-you h2 {
+      font-size: 2rem;
+      color: var(--green-dark);
+      margin-bottom: 10px;
+    }
+
+    .thank-you h2.arabic {
+      font-family: 'Amiri', serif;
+      font-size: 1.8rem;
+      color: var(--green-medium);
+      margin-bottom: 20px;
+    }
+
+    .thank-you p {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      line-height: 1.8;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-light);
+    }
+
+    .footer-verse {
+      font-family: 'Amiri', serif;
+      font-size: 1.1rem;
+      color: var(--green-dark);
+      margin-bottom: 10px;
+      line-height: 1.8;
+    }
+
+    .footer-translation {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--text-light);
+      max-width: 500px;
+      margin: 0 auto 20px;
+    }
+
+    .hearts {
+      color: var(--gold);
+      font-size: 1.2rem;
+      letter-spacing: 10px;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        padding: 15px;
+      }
+
+      .couple-names {
+        font-size: 2.5rem;
+      }
+
+      .couple-names-arabic {
+        font-size: 2rem;
+      }
+
+      .rsvp-card {
+        padding: 35px 25px;
+      }
+
+      .response-options {
+        flex-direction: column;
+      }
+
+      .date {
+        font-size: 1.6rem;
+      }
+
+      .corner-decor {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    /* Loading spinner */
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s linear infinite;
+      margin-right: 10px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Hidden class */
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="pattern-overlay"></div>
+  
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <p class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      
+      <div class="ornament">
+        <div class="ornament-line"></div>
+        <span class="ornament-center">❧</span>
+      </div>
+      
+      <p class="wedding-label">Wedding Invitation</p>
+      
+      <h1 class="couple-names">
+        Motasem
+        <span class="ampersand">&</span>
+        Dania
+      </h1>
+      
+      <h2 class="couple-names-arabic">معتصم و دانية</h2>
+      
+      <div class="ornament">
+        <div class="ornament-line"></div>
+        <span class="ornament-center">❧</span>
+      </div>
+    </header>
+
+    <!-- RSVP Card -->
+    <div class="rsvp-card">
+      <div class="corner-decor top-left"></div>
+      <div class="corner-decor top-right"></div>
+      <div class="corner-decor bottom-left"></div>
+      <div class="corner-decor bottom-right"></div>
+
+      <!-- Event Details -->
+      <div class="event-details">
+        <p class="date">March 28, 2026</p>
+        <p class="date-arabic">٢٨ مارس ٢٠٢٦</p>
+        <p class="location">
+          <span class="location-icon">📍</span>
+          Amman, Jordan | عمّان، الأردن
+        </p>
+      </div>
+
+      <!-- Question Section -->
+      <div class="question-section">
+        <p class="question">
+          Will you be able to join us at our wedding on the 28th of March in Amman, Jordan?
+        </p>
+        <p class="question-arabic">
+          هل ستتمكن من الانضمام إلينا في حفل زفافنا في ٢٨ مارس في عمّان، الأردن؟
+        </p>
+        
+        <div class="deadline">
+          <p>Kindly confirm before February 18th</p>
+          <p>يرجى التأكيد قبل ١٨ فبراير</p>
+        </div>
+      </div>
+
+      <!-- RSVP Form -->
+      <form class="rsvp-form" id="rsvpForm">
+        <div class="form-group">
+          <label class="form-label">
+            Name <span class="form-label-arabic">الاسم</span>
+          </label>
+          <input 
+            type="text" 
+            class="form-input" 
+            id="name" 
+            name="name" 
+            placeholder="Enter your full name / أدخل اسمك الكامل"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            Phone Number <span class="form-label-arabic">رقم الهاتف</span>
+          </label>
+          <input 
+            type="tel" 
+            class="form-input" 
+            id="phone" 
+            name="phone" 
+            placeholder="+962 7X XXX XXXX"
+            required
+          >
+        </div>
+
+        <div class="response-options">
+          <button type="button" class="response-btn accept" data-value="yes" onclick="selectResponse(this, 'yes')">
+            <span class="emoji">💚</span>
+            <span class="text-en">Joyfully Accept</span>
+            <span class="text-ar">نعم، أستطيع الحضور</span>
+          </button>
+          
+          <button type="button" class="response-btn decline" data-value="no" onclick="selectResponse(this, 'no')">
+            <span class="emoji">💔</span>
+            <span class="text-en">Regretfully Decline</span>
+            <span class="text-ar">للأسف، لا أستطيع</span>
+          </button>
+        </div>
+
+        <input type="hidden" id="attending" name="attending" value="">
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span class="submit-btn-text">
+            <span>Send RSVP</span>
+            <span class="arabic">إرسال الرد</span>
+          </span>
+        </button>
+
+        <div class="message success" id="successMessage"></div>
+        <div class="message error" id="errorMessage"></div>
+      </form>
+
+      <!-- Thank You Screen -->
+      <div class="thank-you" id="thankYou">
+        <div class="thank-you-icon">🕌</div>
+        <h2>Thank You!</h2>
+        <h2 class="arabic">شكراً لك!</h2>
+        <p id="thankYouMessage"></p>
+        <br>
+        <p style="font-family: 'Amiri', serif; color: var(--green-dark);">
+          بارك الله لكما وبارك عليكما وجمع بينكما في خير
+        </p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p class="footer-verse">
+        وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً
+      </p>
+      <p class="footer-translation">
+        "And of His signs is that He created for you from yourselves mates that you may find tranquility in them; and He placed between you affection and mercy."
+        <br>— Surah Ar-Rum (30:21)
+      </p>
+      <p class="hearts">♡ ♡ ♡</p>
+    </footer>
+  </div>
+
+  <script>
+    let selectedResponse = '';
+
+    function selectResponse(button, value) {
+      // Remove selected class from all buttons
+      document.querySelectorAll('.response-btn').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      
+      // Add selected class to clicked button
+      button.classList.add('selected');
+      
+      // Set the hidden input value
+      document.getElementById('attending').value = value;
+      selectedResponse = value;
+    }
+
+    document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const attending = document.getElementById('attending').value;
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const errorMessage = document.getElementById('errorMessage');
+      const successMessage = document.getElementById('successMessage');
+      
+      // Reset messages
+      errorMessage.classList.remove('show');
+      successMessage.classList.remove('show');
+      
+      // Validation
+      if (!name || !phone) {
+        errorMessage.textContent = 'Please fill in all fields / يرجى ملء جميع الحقول';
+        errorMessage.classList.add('show');
+        return;
+      }
+      
+      if (!attending) {
+        errorMessage.textContent = 'Please select your response / يرجى اختيار ردك';
+        errorMessage.classList.add('show');
+        return;
+      }
+      
+      // Disable button and show loading
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner"></span> Sending... / جاري الإرسال...';
+      
+      try {
+        const response = await fetch('/api/rsvp', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name, phone, attending })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          // Hide form and show thank you
+          document.getElementById('rsvpForm').classList.add('hidden');
+          
+          const thankYou = document.getElementById('thankYou');
+          const thankYouMessage = document.getElementById('thankYouMessage');
+          
+          if (attending === 'yes') {
+            thankYouMessage.innerHTML = 'We are delighted that you will be joining us!<br>يسعدنا أنك ستنضم إلينا!';
+            document.querySelector('.thank-you-icon').textContent = '🎊';
+          } else {
+            thankYouMessage.innerHTML = 'We will miss you! Thank you for letting us know.<br>سنفتقدك! شكراً لإعلامنا.';
+            document.querySelector('.thank-you-icon').textContent = '💌';
+          }
+          
+          thankYou.classList.add('show');
+        } else {
+          errorMessage.textContent = data.message || 'Something went wrong. Please try again.';
+          errorMessage.classList.add('show');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span class="submit-btn-text"><span>Send RSVP</span><span class="arabic">إرسال الرد</span></span>';
+        }
+      } catch (error) {
+        errorMessage.textContent = 'Connection error. Please try again. / خطأ في الاتصال. يرجى المحاولة مرة أخرى.';
+        errorMessage.classList.add('show');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span class="submit-btn-text"><span>Send RSVP</span><span class="arabic">إرسال الرد</span></span>';
+      }
+    });
+  </script>
+</body>
+</html>
