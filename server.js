@@ -15,11 +15,16 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 // Email setup
 const createTransporter = () => {
   return nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS
-    }
+    },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 10000
   });
 };
 
@@ -162,21 +167,19 @@ app.post('/api/rsvp', async (req, res) => {
 
     console.log('RSVP saved:', { name, phone, attending });
 
-    // Send email notification
-    try {
-      console.log('Attempting to send email with USER:', process.env.EMAIL_USER ? 'SET' : 'NOT SET', 'PASS:', process.env.EMAIL_PASS ? 'SET' : 'NOT SET');
-      const emailSent = await sendNotification({ name, phone, attending });
-      console.log('Email result:', emailSent ? 'SENT' : 'FAILED');
-    } catch (emailErr) {
-      console.error('Email notification failed:', emailErr);
-    }
-
+    // Respond to guest immediately
     res.json({
       success: true,
       message: attending === 'yes'
         ? 'Thank you! We look forward to celebrating with you! / شكراً لك! نتطلع للاحتفال معك!'
         : 'Thank you for letting us know. We will miss you! / شكراً لإعلامنا. سنفتقدك!'
     });
+
+    // Send email in background (don't block the response)
+    sendNotification({ name, phone, attending })
+      .then(sent => console.log('Email result:', sent ? 'SENT' : 'FAILED'))
+      .catch(err => console.error('Email notification failed:', err.message));
+
   } catch (err) {
     console.error('Server error:', err);
     res.status(500).json({
