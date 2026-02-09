@@ -186,7 +186,7 @@ app.post('/api/rsvp', async (req, res) => {
   }
 });
 
-// Get all responses (admin)
+// Get all responses (admin) - beautiful HTML dashboard
 app.get('/api/responses', async (req, res) => {
   try {
     const { data, error } = await supabase
@@ -198,7 +198,117 @@ app.get('/api/responses', async (req, res) => {
       return res.status(500).json({ error: 'Error reading responses' });
     }
 
-    res.json(data);
+    const total = data.length;
+    const attending = data.filter(r => r.attending === true);
+    const declined = data.filter(r => r.attending === false);
+
+    res.send(`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSVP Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Cormorant Garamond', serif; background: #faf8f5; min-height: 100vh; padding: 30px 20px; }
+    .dashboard { max-width: 800px; margin: 0 auto; }
+    h1 { text-align: center; color: #1a3d1f; font-size: 2.2rem; font-weight: 400; margin-bottom: 5px; }
+    .subtitle { text-align: center; font-family: 'Tajawal', sans-serif; color: #888; margin-bottom: 30px; font-size: 1rem; }
+    
+    .stats { display: flex; gap: 15px; margin-bottom: 35px; }
+    .stat-card { flex: 1; background: #fff; border-radius: 14px; padding: 25px 15px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+    .stat-number { font-size: 2.8rem; font-weight: 600; line-height: 1; margin-bottom: 6px; }
+    .stat-label { font-size: 0.95rem; color: #888; }
+    .stat-label-ar { font-family: 'Tajawal', sans-serif; font-size: 0.85rem; color: #aaa; }
+    .stat-attending .stat-number { color: #2c5530; }
+    .stat-declined .stat-number { color: #c0a080; }
+    .stat-total .stat-number { color: #d4af37; }
+    
+    .section { margin-bottom: 30px; }
+    .section-title { font-size: 1.3rem; color: #1a3d1f; padding-bottom: 10px; border-bottom: 2px solid #d4af37; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+    .section-badge { background: #2c5530; color: #fff; font-size: 0.8rem; padding: 3px 10px; border-radius: 20px; }
+    .section-badge.decline { background: #c0a080; }
+    
+    .guest-list { display: flex; flex-direction: column; gap: 10px; }
+    .guest-card { background: #fff; border-radius: 10px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.04); border-left: 4px solid #2c5530; transition: transform 0.2s; }
+    .guest-card:hover { transform: translateX(4px); }
+    .guest-card.declined { border-left-color: #c0a080; }
+    .guest-name { font-size: 1.2rem; color: #2d2d2d; font-weight: 500; }
+    .guest-phone { font-size: 0.95rem; color: #888; margin-top: 3px; font-family: 'Tajawal', sans-serif; }
+    .guest-time { font-size: 0.8rem; color: #aaa; text-align: right; font-family: 'Tajawal', sans-serif; white-space: nowrap; }
+    
+    .empty { text-align: center; color: #aaa; padding: 20px; font-style: italic; }
+    .refresh { display: block; margin: 20px auto; padding: 12px 30px; background: linear-gradient(135deg, #1a3d1f, #2c5530); color: #fff; border: none; border-radius: 10px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; cursor: pointer; }
+    .refresh:hover { opacity: 0.9; }
+    
+    @media (max-width: 600px) {
+      .stats { flex-direction: row; gap: 10px; }
+      .stat-card { padding: 18px 10px; }
+      .stat-number { font-size: 2rem; }
+      .guest-card { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <h1>Motasem & Dania</h1>
+    <p class="subtitle">RSVP Dashboard / لوحة تأكيد الحضور</p>
+    
+    <div class="stats">
+      <div class="stat-card stat-attending">
+        <div class="stat-number">${attending.length}</div>
+        <div class="stat-label">Attending</div>
+        <div class="stat-label-ar">سيحضرون</div>
+      </div>
+      <div class="stat-card stat-declined">
+        <div class="stat-number">${declined.length}</div>
+        <div class="stat-label">Declined</div>
+        <div class="stat-label-ar">اعتذروا</div>
+      </div>
+      <div class="stat-card stat-total">
+        <div class="stat-number">${total}</div>
+        <div class="stat-label">Total</div>
+        <div class="stat-label-ar">المجموع</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Attending <span class="section-badge">${attending.length}</span></h2>
+      <div class="guest-list">
+        ${attending.length === 0 ? '<p class="empty">No responses yet</p>' : attending.map((g, i) => `
+          <div class="guest-card">
+            <div>
+              <div class="guest-name">${i + 1}. ${g.name}</div>
+              <div class="guest-phone">${g.phone}</div>
+            </div>
+            <div class="guest-time">${new Date(g.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Declined <span class="section-badge decline">${declined.length}</span></h2>
+      <div class="guest-list">
+        ${declined.length === 0 ? '<p class="empty">No declines yet</p>' : declined.map((g, i) => `
+          <div class="guest-card declined">
+            <div>
+              <div class="guest-name">${i + 1}. ${g.name}</div>
+              <div class="guest-phone">${g.phone}</div>
+            </div>
+            <div class="guest-time">${new Date(g.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <button class="refresh" onclick="location.reload()">Refresh / تحديث</button>
+  </div>
+</body>
+</html>
+    `);
   } catch (err) {
     res.status(500).json({ error: 'Error reading responses' });
   }
