@@ -113,11 +113,12 @@ const sendNotification = async ({ name, phone, attending }) => {
 
   try {
     const transporter = createTransporter();
-    await transporter.sendMail(mailOptions);
-    console.log('Notification email sent to both recipients');
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Notification email sent successfully:', info.response);
     return true;
   } catch (error) {
-    console.error('Email error:', error.message);
+    console.error('Email error:', error.code, error.message);
+    console.error('Full email error:', JSON.stringify(error, null, 2));
     return false;
   }
 };
@@ -161,10 +162,14 @@ app.post('/api/rsvp', async (req, res) => {
 
     console.log('RSVP saved:', { name, phone, attending });
 
-    // Send email notification (don't block response on email)
-    sendNotification({ name, phone, attending }).catch(err =>
-      console.error('Email notification failed:', err.message)
-    );
+    // Send email notification
+    try {
+      console.log('Attempting to send email with USER:', process.env.EMAIL_USER ? 'SET' : 'NOT SET', 'PASS:', process.env.EMAIL_PASS ? 'SET' : 'NOT SET');
+      const emailSent = await sendNotification({ name, phone, attending });
+      console.log('Email result:', emailSent ? 'SENT' : 'FAILED');
+    } catch (emailErr) {
+      console.error('Email notification failed:', emailErr);
+    }
 
     res.json({
       success: true,
@@ -196,6 +201,31 @@ app.get('/api/responses', async (req, res) => {
     res.json(data);
   } catch (err) {
     res.status(500).json({ error: 'Error reading responses' });
+  }
+});
+
+// Test email endpoint (for debugging)
+app.get('/api/test-email', async (req, res) => {
+  console.log('Testing email...');
+  console.log('EMAIL_USER:', process.env.EMAIL_USER ? process.env.EMAIL_USER : 'NOT SET');
+  console.log('EMAIL_PASS:', process.env.EMAIL_PASS ? 'SET (' + process.env.EMAIL_PASS.length + ' chars)' : 'NOT SET');
+  
+  try {
+    const transporter = createTransporter();
+    await transporter.verify();
+    console.log('Transporter verified OK');
+    
+    const info = await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: 'motasem.aljayyousi@gmail.com',
+      subject: 'RSVP Email Test - It Works!',
+      text: 'If you see this, email is working on Railway!'
+    });
+    
+    res.json({ success: true, response: info.response });
+  } catch (error) {
+    console.error('Test email error:', error);
+    res.json({ success: false, error: error.message, code: error.code });
   }
 });
 
