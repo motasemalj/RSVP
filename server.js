@@ -196,6 +196,24 @@ app.get('/api/responses', async (req, res) => {
   }
 });
 
+// Debug Supabase connection
+app.get('/api/test-db', async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from('rsvps')
+      .select('*')
+      .limit(1);
+
+    if (error) {
+      return res.json({ success: false, error, hint: 'Did you create the rsvps table? Check the SQL in README.' });
+    }
+
+    res.json({ success: true, rowCount: data.length, supabaseKey: process.env.SUPABASE_KEY ? 'SET' : 'NOT SET' });
+  } catch (err) {
+    res.json({ success: false, error: err.message });
+  }
+});
+
 // Test email endpoint
 app.get('/api/test-email', async (req, res) => {
   try {
